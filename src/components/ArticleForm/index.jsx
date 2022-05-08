@@ -18,7 +18,6 @@ function ArticleForm() {
         </button>
       </div>
       <h3>Полное описание</h3>
-      <RichTextArea />
     </div>
   );
 }
