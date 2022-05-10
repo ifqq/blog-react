@@ -46,7 +46,9 @@ function Menu({ onClickMenu, opened, setActive }) {
                 <button onClick={() => navigate('/profile')}>
                   Мой профиль
                 </button>
-                <button>Создать запись</button>
+                <button onClick={() => navigate('/create-post')}>
+                  Создать запись
+                </button>
                 <button onClick={logOut}>Выйти</button>
               </div>
             </>

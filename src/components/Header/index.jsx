@@ -26,6 +26,7 @@ function Header({ onClickLogin }) {
           onClickSearch={() => setOpenSearch(true)}
           navToHome={() => navigate('/')}
           onClickLogin={onClickLogin}
+          onClickWrite={() => navigate('/create-post')}
         />
       )}
     </div>

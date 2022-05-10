@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import styles from './Icons.module.scss';
 
-function Icons({ onClickSearch, navToHome, onClickLogin }) {
+function Icons({ onClickSearch, navToHome, onClickLogin, onClickWrite }) {
   const { auth } = useSelector((state) => state.profile);
   return (
     <>
@@ -17,7 +17,7 @@ function Icons({ onClickSearch, navToHome, onClickLogin }) {
         </div>
         {auth && (
           <div className={styles.tooltip}>
-            <img onClick={navToHome} src='./svg/write.svg' alt='Write' />
+            <img onClick={onClickWrite} src='./svg/write.svg' alt='Write' />
             <span className={styles.tooltiptext}>Написать</span>
           </div>
         )}

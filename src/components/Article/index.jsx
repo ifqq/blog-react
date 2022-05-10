@@ -14,7 +14,7 @@ function Article({ title, text, image, date, viewing }) {
           {viewing}
         </div>
       </div>
-      {image ? <img className={styles.img} src={image} alt='Img' /> : null}
+      <img className={styles.img} src={image} alt='Img' />
     </div>
   );
 }

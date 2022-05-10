@@ -1,31 +1,23 @@
 import React from 'react';
-import Menu from './components/Menu';
 import Main from './components/Main';
 import Article from './components/Article';
-import Header from './components/Header';
 import Login from './components/Login';
 import Profile from './components/Profile';
-import ArticleForm from './components/ArticleForm';
+import PostForm from './components/PostForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { authMe } from './redux/actions/profile';
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import './App.scss';
+import Layout from './Layout';
+import Post from './components/Post';
 
 function App() {
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const [menuOpened, setMenuOpened] = React.useState(false);
   const [loginActive, setLoginActive] = React.useState(false);
-  const [openPost, setOpenPost] = React.useState(true);
   const filtredItems = state.articles.filter((item) =>
     item.title.toLowerCase().includes(state.searchValue.toLowerCase())
   );
@@ -41,15 +33,12 @@ function App() {
           path='/'
           element={
             <div className='App'>
-              {openPost ? <ArticleForm /> : <Main />}
-              <div className='d-flex flex-column'>
-                <Header
-                  onClickLogin={() => {
-                    state.profile.auth
-                      ? navigate('/profile')
-                      : setLoginActive(true);
-                  }}
-                />
+              <Main />
+              <Layout
+                setMenuOpened={setMenuOpened}
+                menuOpened={menuOpened}
+                setLoginActive={setLoginActive}
+              >
                 {(filtredItems ? filtredItems : state.articles).map((obj) => (
                   <Article
                     key={obj.id}
@@ -60,38 +49,74 @@ function App() {
                     viewing={obj.viewing}
                   />
                 ))}
-              </div>
-              <Menu
-                onClickMenu={() => setMenuOpened(!menuOpened)}
-                setActive={setLoginActive}
-                opened={menuOpened}
-              />
+              </Layout>
             </div>
           }
         />
         <Route
-          path='/profile'
+          path='post/:id'
           element={
-            <div className='dGrid'>
-              <div className='d-flex flex-column'>
-                <Header
-                  onClickLogin={() => {
-                    state.profile.auth
-                      ? navigate('/profile')
-                      : setLoginActive(true);
-                  }}
-                />
-                <Profile />
-              </div>
-              <Menu
-                onClickMenu={() => setMenuOpened(!menuOpened)}
-                setActive={setLoginActive}
-                opened={menuOpened}
-              />
+            <div className='App'>
+              <Post />
+              <Layout
+                setMenuOpened={setMenuOpened}
+                menuOpened={menuOpened}
+                setLoginActive={setLoginActive}
+              >
+                {(filtredItems ? filtredItems : state.articles).map((obj) => (
+                  <Article
+                    key={obj.id}
+                    title={obj.title}
+                    text={obj.text}
+                    image={obj.image}
+                    date={obj.date}
+                    viewing={obj.viewing}
+                  />
+                ))}
+              </Layout>
             </div>
           }
         />
-        <Route path='posts' element={<ArticleForm />} />
+        <Route
+          path='create-post'
+          element={
+            <div className='App'>
+              <PostForm />
+              <Layout
+                setMenuOpened={setMenuOpened}
+                menuOpened={menuOpened}
+                setLoginActive={setLoginActive}
+              >
+                {(filtredItems ? filtredItems : state.articles).map((obj) => (
+                  <Article
+                    key={obj.id}
+                    title={obj.title}
+                    text={obj.text}
+                    image={obj.image}
+                    date={obj.date}
+                    viewing={obj.viewing}
+                  />
+                ))}
+              </Layout>
+            </div>
+          }
+        />
+        <Route
+          exact
+          path='/profile'
+          element={
+            <div className='dGrid'>
+              <Layout
+                setMenuOpened={setMenuOpened}
+                menuOpened={menuOpened}
+                setLoginActive={setLoginActive}
+              >
+                <Profile />
+              </Layout>
+            </div>
+          }
+        />
+
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
       {loginActive && <Login active={loginActive} setActive={setLoginActive} />}
