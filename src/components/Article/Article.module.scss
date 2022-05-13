@@ -2,9 +2,10 @@
   padding-left: 30px;
   padding-right: 30px;
   display: flex;
+  justify-content:space-between;
   border: 1px solid;
   border-color: #F9F9F9;
-
+  
   h3{
     margin-top: 30px;
     margin-bottom: 10px;
@@ -12,6 +13,9 @@
     font-size: 24px;
     line-height: 30px;
     font-weight: 800;
+  }
+  h3:hover{
+    cursor: pointer;
   }
   p{
     margin-bottom: 18px;
@@ -31,14 +35,23 @@
       margin-right: 5px;
     }
   }
-  .img{
+  .box {
+    position: relative;
+    overflow:hidden;
+    height: 165px;
+    width: 165px;
+    border-radius: 15px;
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 40px;
-    height: 165px;
-    width: 165px;
-  }
-  img[src=''] {
-    display: none;
-  }
+    .img {
+      position: absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      height: 165px;
+      width: 165px;
+      object-fit:cover;
+   }
+ }
 }

@@ -6,3 +6,11 @@ export const instance = axios.create({
     Authorization: window.localStorage.getItem('token'),
   },
 });
+
+export const uploadInstance = axios.create({
+  baseURL: 'http://localhost:5656',
+  headers: {
+    Authorization: window.localStorage.getItem('token'),
+    'Content-Type': 'multipart/form-data',
+  },
+});
