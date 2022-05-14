@@ -6,7 +6,7 @@ export const uploadArticle = (fields) => async (dispatch) => {
     if (fields.url) {
       const formData = new FormData();
       formData.append('file', fields.url);
-      const { data } = await uploadInstance.post('/posts/upload', formData);
+      const { data } = await uploadInstance.post('posts/upload', formData);
       await uploadPost(fields.title, fields.description, fields.text, data.url);
     } else {
       await uploadPost(fields.title, fields.description, fields.text);
@@ -77,7 +77,7 @@ export const editArticle = (fields, id) => async (dispatch) => {
     if (fields.editFile) {
       const formData = new FormData();
       formData.append('file', fields.url);
-      const { data } = await uploadInstance.post('/posts/upload', formData);
+      const { data } = await uploadInstance.post('posts/upload', formData);
       await editPost(
         fields.title,
         fields.description,
@@ -102,7 +102,7 @@ export const editArticle = (fields, id) => async (dispatch) => {
 };
 
 const editPost = async (title, description, text, url = '', id) => {
-  await instance.patch(`/posts/${id}`, {
+  await instance.patch(`posts/${id}`, {
     title: title,
     description: description,
     photoUrl: url,
@@ -111,6 +111,6 @@ const editPost = async (title, description, text, url = '', id) => {
 };
 
 export const deletePost = (id) => async (dispatch) => {
-  await instance.delete(`/posts/${id}`);
+  await instance.delete(`posts/${id}`);
   dispatch(updatePosts());
 };
