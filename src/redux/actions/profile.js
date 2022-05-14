@@ -3,7 +3,7 @@ import { instance } from '../../config/axios';
 
 export const authMe = () => async (dispatch) => {
   try {
-    const { data } = await instance.get('auth/me');
+    const { data } = await instance.get('/auth/me');
     await dispatch(loginUser(data._id, data.fullName, data.createdAt));
   } catch {
     await dispatch(clearUserInfo());
@@ -24,7 +24,7 @@ export const getUserPosts =
   async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}posts?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
+        `${process.env.REACT_APP_API}/posts?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
       );
 
       await dispatch({
@@ -46,7 +46,7 @@ export const getUserComments =
   async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}comments?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
+        `${process.env.REACT_APP_API}/comments?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
       );
       await dispatch({
         type: 'GET_USER_COMMENTS',

@@ -31,7 +31,7 @@ function SignIn() {
   const onSubmit = async (fields) => {
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API}auth/login`,
+        `${process.env.REACT_APP_API}/auth/login`,
         {
           email: fields.email,
           password: fields.password,
