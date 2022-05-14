@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import { deletePost } from '../../redux/actions/articles';
-import Comment from '../Comment';
+import Comment from '../../components/Comment';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -41,7 +41,9 @@ function Post() {
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const { data } = await axios.get(`http://localhost:5656/posts/${id}`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}posts/${id}`
+      );
       dispatch(updateComments(id));
       setPost(data);
       setIsLoading(false);
@@ -119,7 +121,10 @@ function Post() {
         <>
           <div className={styles.img}>
             {post.photoUrl && (
-              <img src={`http://localhost:5656/${post.photoUrl}`} alt='img' />
+              <img
+                src={`${process.env.REACT_APP_API}${post.photoUrl}`}
+                alt='img'
+              />
             )}
           </div>
           <div className={styles.header}>

@@ -30,10 +30,13 @@ function SignIn() {
   });
   const onSubmit = async (fields) => {
     try {
-      const { data } = await axios.post('http://localhost:5656/auth/login', {
-        email: fields.email,
-        password: fields.password,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}auth/login`,
+        {
+          email: fields.email,
+          password: fields.password,
+        }
+      );
       localStorage.setItem('token', data.token);
       reset({ email: '', password: '' });
       window.location.reload();

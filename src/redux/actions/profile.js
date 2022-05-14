@@ -19,24 +19,12 @@ const loginUser = (id, fullName, createdAt) => ({
   payload: { id, fullName, createdAt },
 });
 
-// export const getUserPosts = (id) => async (dispatch) => {
-//   try {
-//     const { data } = await axios.get(`http://localhost:5656/posts?${id}`);
-//     console.log(data);
-//     dispatch({
-//       type: 'GET_USER_POSTS',
-//       payload: data.items,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 export const getUserPosts =
   (query = '', page = 1, id) =>
   async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5656/posts?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
+        `${process.env.REACT_APP_API}posts?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
       );
 
       await dispatch({
@@ -58,7 +46,7 @@ export const getUserComments =
   async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5656/comments?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
+        `${process.env.REACT_APP_API}comments?userId=${id}&&limit=2&&page=${page}&&orderBy=desc`
       );
       await dispatch({
         type: 'GET_USER_COMMENTS',

@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^4.0.0",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "html-react-parser": "^1.4.12",

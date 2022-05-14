@@ -57,7 +57,7 @@ function Article({
             <div className={styles.box}>
               <img
                 className={styles.img}
-                src={`http://localhost:5656/${photoUrl}`}
+                src={`${process.env.REACT_APP_API}${photoUrl}`}
                 alt='Img'
               />
             </div>

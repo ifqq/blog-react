@@ -30,11 +30,14 @@ function SignUp() {
 
   const onSubmit = async (fields) => {
     try {
-      const { data } = await axios.post('http://localhost:5656/auth/register', {
-        fullName: fields.fullName,
-        email: fields.email,
-        password: fields.password,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}auth/register`,
+        {
+          fullName: fields.fullName,
+          email: fields.email,
+          password: fields.password,
+        }
+      );
       localStorage.setItem('token', data.token);
       reset({ fullName: '', email: '', password: '' });
       window.location.reload();

@@ -53,7 +53,7 @@ function PostForm({ edit }) {
     setIsLoading(true);
     if (edit) {
       const upd = async () => {
-        const { data } = await axios.get('http://localhost:5656/posts');
+        const { data } = await axios.get(`${process.env.REACT_APP_API}posts`);
         const post = data.items.find((obj) => obj._id === id);
         if (post.photoUrl !== '') {
           setFields({
