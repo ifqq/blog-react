@@ -5,15 +5,43 @@ import { editArticle, uploadArticle } from '../../redux/actions/articles';
 import styles from './PostForm.module.scss';
 import ContentLoader from 'react-content-loader';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup
+  .object({
+    title: yup
+      .string()
+      .min(3, 'Минимум 3 символа')
+      .max(100, 'Максимум 100 символов')
+      .required('Это обязательное поле!'),
+    description: yup
+      .string()
+      .min(3, 'Минимум 3 символа')
+      .max(200, 'Максимум 200 символов')
+      .required('Это обязательное поле!'),
+    text: yup
+      .string()
+      .min(3, 'Минимум 3 символа')
+      .max(1000, 'Максимум 1000 символов')
+      .required('Это обязательное поле!'),
+  })
+  .required();
 
 function PostForm({ edit }) {
   const [fields, setFields] = React.useState({
-    title: '',
-    description: '',
     url: null,
-    text: '',
     textUrl: '',
     editFile: false,
+  });
+  const { handleSubmit, reset, setValue, register, formState } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      text: '',
+    },
+    resolver: yupResolver(schema),
   });
   const [isLoading, setIsLoading] = React.useState(true);
   let { id } = useParams();
@@ -29,33 +57,39 @@ function PostForm({ edit }) {
         const post = data.items.find((obj) => obj._id === id);
         if (post.photoUrl !== '') {
           setFields({
-            title: post.title,
-            description: post.description,
             textUrl: post.photoUrl,
-            text: post.text,
           });
+          setValue('title', post.title);
+          setValue('description', post.description);
+          setValue('text', post.text);
         } else {
+          setValue('title', post.title);
+          setValue('description', post.description);
+          setValue('text', post.text);
           setFields({
-            title: post.title,
-            description: post.description,
             editFile: true,
-            text: post.text,
           });
         }
       };
       upd().catch(console.error);
     } else {
-      setFields({
+      reset({
         title: '',
         description: '',
-        url: null,
         text: '',
+      });
+      setFields({
+        url: null,
         textUrl: '',
         editFile: false,
       });
     }
     setIsLoading(false);
   }, [location]);
+
+  const onSubmit = (data) => {
+    uploadFile(data);
+  };
 
   function handleChangeInput(event) {
     if (event.target.name === 'url') {
@@ -65,21 +99,29 @@ function PostForm({ edit }) {
     }
   }
 
-  const uploadFile = () => {
+  const uploadFile = (data) => {
+    const dataObj = { ...data, ...fields };
     if (edit) {
-      dispatch(editArticle(fields, id));
+      dispatch(editArticle(dataObj, id));
       setFields({
-        title: '',
-        description: '',
         url: null,
-        text: '',
         textUrl: '',
         editFile: false,
       });
-      navigate(`/post/${id}`);
+      reset({
+        title: '',
+        description: '',
+        text: '',
+      });
+      navigate(`/`);
     } else {
-      dispatch(uploadArticle(fields));
-      setFields({ title: '', description: '', url: null, text: '' });
+      dispatch(uploadArticle(dataObj));
+      setFields({ url: null });
+      reset({
+        title: '',
+        description: '',
+        text: '',
+      });
       navigate('/');
     }
   };
@@ -108,20 +150,33 @@ function PostForm({ edit }) {
         <>
           <textarea
             name='title'
-            value={fields.title}
-            onChange={handleChangeInput}
-            className={styles.title}
+            className={
+              formState.errors.title
+                ? `${styles.title} ${styles.errorTitle}`
+                : `${styles.title}`
+            }
+            {...register('title')}
             type='text'
             placeholder='Введите заголовок...'
           />
+          <span className={styles.signSpan}>
+            {formState.errors.title && formState.errors.title.message}
+          </span>
           <h3>Короткое описание</h3>
           <textarea
             name='description'
-            value={fields.description}
-            onChange={handleChangeInput}
+            {...register('description')}
             type='text'
-            className={styles.description}
+            className={
+              formState.errors.description
+                ? `${styles.description} ${styles.error}`
+                : `${styles.description}`
+            }
           />
+          <span className={styles.signSpan}>
+            {formState.errors.description &&
+              formState.errors.description.message}
+          </span>
           <h3>Ссылка на изображение:</h3>
           <label className={styles.upload}>
             {!fields.editFile && edit ? (
@@ -151,12 +206,18 @@ function PostForm({ edit }) {
           <h3>Полное описание</h3>
           <textarea
             name='text'
-            value={fields.text}
-            onChange={handleChangeInput}
+            {...register('text')}
             type='text'
-            className={styles.text}
+            className={
+              formState.errors.text
+                ? `${styles.text} ${styles.error}`
+                : `${styles.text}`
+            }
           />
-          <button onClick={uploadFile} className={styles.btn}>
+          <span className={styles.signSpan}>
+            {formState.errors.text && formState.errors.text.message}
+          </span>
+          <button onClick={handleSubmit(onSubmit)} className={styles.btn}>
             {edit ? 'Сохранить' : 'Опубликовать'}
           </button>
         </>

@@ -1,25 +1,43 @@
 import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import { deletePost } from '../../redux/actions/articles';
 import Comment from '../Comment';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { createComment, updateComments } from '../../redux/actions/comments';
 
 import styles from './Post.module.scss';
+
+const schema = yup
+  .object({
+    commentValue: yup
+      .string()
+      .min(2, 'Минимум 2 символа')
+      .max(200, 'Максимум 200 символов')
+      .required('Это обязательное поле!'),
+  })
+  .required();
 
 function Post() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(true);
   const [post, setPost] = React.useState({});
-  const [commentValue, setCommentValue] = React.useState('');
   let { id } = useParams();
   const userId = useSelector((state) => state.profile.id);
   const { comments } = useSelector((state) => state);
 
-  // const location = useLocation();
+  const { handleSubmit, reset, register, formState } = useForm({
+    defaultValues: {
+      commentValue: '',
+    },
+    resolver: yupResolver(schema),
+  });
+
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -38,9 +56,13 @@ function Post() {
     }
   };
 
-  const onCreateComment = () => {
+  const onSubmit = (data) => {
+    onCreateComment(data.commentValue);
+  };
+
+  const onCreateComment = (commentValue) => {
     dispatch(createComment(commentValue, id));
-    setCommentValue('');
+    reset({ commentValue: '' });
   };
 
   const options = {
@@ -133,10 +155,17 @@ function Post() {
 
             <h3>Добавить комментарий</h3>
             <textarea
-              value={commentValue}
-              onChange={(e) => setCommentValue(e.target.value)}
+              className={
+                formState.errors.commentValue ? `${styles.error}` : null
+              }
+              name='commentValue'
+              {...register('commentValue')}
             />
-            <button className={styles.btn} onClick={onCreateComment}>
+            <span className={styles.signSpan}>
+              {formState.errors.commentValue &&
+                formState.errors.commentValue.message}
+            </span>
+            <button className={styles.btn} onClick={handleSubmit(onSubmit)}>
               Отправить
             </button>
           </div>
