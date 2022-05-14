@@ -31,10 +31,10 @@ export const updatePosts =
       const { data } =
         query === ''
           ? await axios.get(
-              `http://localhost:5656/posts?limit=4&page=${page}&orderBy=desc`
+              `${process.env.REACT_APP_API}posts?limit=4&page=${page}&orderBy=desc`
             )
           : await axios.get(
-              `http://localhost:5656/posts?limit=4&page=${page}&query=${query}&orderBy=desc`
+              `${process.env.REACT_APP_API}posts?limit=4&page=${page}&query=${query}&orderBy=desc`
             );
 
       await dispatch({
@@ -56,7 +56,7 @@ export const searchPosts =
   async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5656/posts?limit=4&page=${page}&orderBy=desc`
+        `${process.env.REACT_APP_API}posts?limit=4&page=${page}&orderBy=desc`
       );
 
       await dispatch({

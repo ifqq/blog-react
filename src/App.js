@@ -1,12 +1,12 @@
 import React from 'react';
-import Main from './components/Main';
-import Login from './components/Login';
-import Profile from './components/Profile';
-import PostForm from './components/PostForm';
+import Main from './pages/Main';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import PostForm from './pages/PostForm';
 import { useDispatch } from 'react-redux';
 import { authMe } from './redux/actions/profile';
 import { Layout, LayoutProfile } from './components/Layout';
-import Post from './components/Post';
+import Post from './pages/Post';
 import { updatePosts } from './redux/actions/articles';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { NotFound } from './pages/NotFound';

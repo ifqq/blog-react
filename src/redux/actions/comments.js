@@ -4,7 +4,7 @@ import { instance } from '../../config/axios';
 export const updateComments = (id) => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      `http://localhost:5656/comments/post/${id}`
+      `${process.env.REACT_APP_API}comments/post/${id}`
     );
     dispatch({
       type: 'UPDATE_COMMENTS',
@@ -17,7 +17,7 @@ export const updateComments = (id) => async (dispatch) => {
 
 export const createComment = (text, id) => async (dispatch) => {
   try {
-    await instance.post('http://localhost:5656/comments', {
+    await instance.post('${process.env.REACT_APP_API}comments', {
       text: text,
       postId: id,
     });

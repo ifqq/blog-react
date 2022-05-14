@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { getUserComments, getUserPosts } from '../../redux/actions/profile';
-import Article from '../Article';
-import Comment from '../Comment';
-import { Pagination } from '../Pagination';
+import Article from '../../components/Article';
+import Comment from '../../components/Comment';
+import { Pagination } from '../../components/Pagination';
 
 import styles from './Profile.module.scss';
 
