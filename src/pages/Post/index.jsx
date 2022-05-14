@@ -42,7 +42,7 @@ function Post() {
     const fetchData = async () => {
       setIsLoading(true);
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}posts/${id}`
+        `${process.env.REACT_APP_API}/posts/${id}`
       );
       dispatch(updateComments(id));
       setPost(data);
