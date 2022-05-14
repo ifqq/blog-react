@@ -1,12 +1,24 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { getUserPosts } from '../../redux/actions/profile';
 
 import styles from './Profile.module.scss';
 
 function Profile() {
   const [selected, setSelected] = React.useState(false);
   const { profile } = useSelector((state) => state);
+  const { userPosts } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (profile.auth) {
+      if (!selected) {
+        dispatch(getUserPosts(profile.id));
+        console.log(userPosts);
+      }
+    }
+  }, [selected]);
 
   if (!profile.auth) {
     return <Navigate to='/' />;

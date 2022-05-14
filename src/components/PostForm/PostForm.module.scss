@@ -62,6 +62,22 @@
       outline: none;
       margin-right: 15px;
     }
+    .textUrl{
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 442px;
+      margin: 0;
+      padding: 10px;
+      border: 1px solid #ECEEF1;
+      border-radius: 10px;
+      color: #080B0E;
+      font-size: 16px;
+      font-weight: 400;
+      outline: none;
+      margin-right: 10px;
+    }
 
     .uploadBtn{
       display: flex;

@@ -9,18 +9,20 @@ import { Layout, LayoutProfile } from './components/Layout';
 import Post from './components/Post';
 import { updatePosts } from './redux/actions/articles';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-
-import './App.scss';
+import { NotFound } from './pages/NotFound';
 
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
   const [menuOpened, setMenuOpened] = React.useState(false);
   const [loginActive, setLoginActive] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
+    setIsLoading(true);
     dispatch(authMe());
     dispatch(updatePosts());
+    setIsLoading(false);
   }, [location]);
 
   return (
@@ -33,12 +35,15 @@ function App() {
               setMenuOpened={setMenuOpened}
               menuOpened={menuOpened}
               setLoginActive={setLoginActive}
+              isLoading={isLoading}
             />
           }
         >
           <Route index element={<Main />} />
           <Route path='post/:id' element={<Post />} />
           <Route path='create-post' element={<PostForm />} />
+          <Route path='edit-post/:id' element={<PostForm edit />} />
+          <Route path='not-found' element={<NotFound />} />
         </Route>
         <Route
           exact
@@ -53,7 +58,7 @@ function App() {
         >
           <Route index element={<Profile />} />
         </Route>
-        <Route path='*' element={<Navigate to='/' />} />
+        <Route path='*' element={<Navigate to='/not-found' />} />
       </Routes>
       {loginActive && <Login active={loginActive} setActive={setLoginActive} />}
     </>
