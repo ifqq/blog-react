@@ -3,8 +3,8 @@ const initialState = {
   id: '',
   fullName: '',
   createdId: '',
-  userPosts: [{}],
-  userComments: [{}],
+  userPosts: { total: 1, currentPage: 1, maxPage: 1, items: [{}] },
+  userComments: { total: 1, currentPage: 1, maxPage: 1, items: [{}] },
 };
 
 export function profileReducer(state = initialState, action) {
@@ -24,14 +24,20 @@ export function profileReducer(state = initialState, action) {
         id: '',
         fullName: '',
         createdAt: '',
-        userPosts: [{}],
-        userComments: [{}],
+        userPosts: { total: 1, currentPage: 1, maxPage: 1, items: [{}] },
+        userComments: { total: 1, currentPage: 1, maxPage: 1, items: [{}] },
       };
 
     case 'GET_USER_POSTS':
       return {
         ...state,
         userPosts: action.payload,
+      };
+
+    case 'GET_USER_COMMENTS':
+      return {
+        ...state,
+        userComments: action.payload,
       };
 
     default:

@@ -1,20 +1,26 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import styles from './Icons.module.scss';
 
 function Icons({ onClickSearch, navToHome, onClickLogin, onClickWrite }) {
   const { auth } = useSelector((state) => state.profile);
+  const { pathname } = useLocation();
+  const profile = pathname === '/profile';
   return (
     <>
       <h2 className={styles.h2} onClick={navToHome}>
-        VASYA BLOG
+        CHILLOUT BLOG
       </h2>
+
       <div className={styles.icons}>
-        <div onClick={onClickSearch} className={styles.tooltip}>
-          <img src='./svg/search.svg' alt='Search' />
-          <span className={styles.tooltiptext}>Поиск</span>
-        </div>
+        {!profile && (
+          <div onClick={onClickSearch} className={styles.tooltip}>
+            <img src='./svg/search.svg' alt='Search' />
+            <span className={styles.tooltiptext}>Поиск</span>
+          </div>
+        )}
         {auth && (
           <div onClick={onClickWrite} className={styles.tooltip}>
             <img src='./svg/write.svg' alt='Write' />

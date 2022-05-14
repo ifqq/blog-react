@@ -1,16 +1,38 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updatePosts } from '../../redux/actions/articles';
-
+import { getUserComments, getUserPosts } from '../../redux/actions/profile';
 import styles from './Pagination.module.scss';
 
-export const Pagination = ({ searchValue, currentPage, maxPage }) => {
+export const Pagination = ({
+  searchValue,
+  currentPage,
+  maxPage,
+  id,
+  selected,
+}) => {
   const dispatch = useDispatch();
   const Plus = () => {
-    dispatch(updatePosts(searchValue, currentPage + 1));
+    if (id) {
+      if (!selected) {
+        dispatch(getUserPosts(searchValue, currentPage + 1, id));
+      } else {
+        dispatch(getUserComments(searchValue, currentPage + 1, id));
+      }
+    } else {
+      dispatch(updatePosts(searchValue, currentPage + 1));
+    }
   };
   const Minus = () => {
-    dispatch(updatePosts(searchValue, currentPage - 1));
+    if (id) {
+      if (!selected) {
+        dispatch(getUserPosts(searchValue, currentPage - 1, id));
+      } else {
+        dispatch(getUserComments(searchValue, currentPage - 1, id));
+      }
+    } else {
+      dispatch(updatePosts(searchValue, currentPage - 1));
+    }
   };
   return (
     <div className={styles.pagination}>
@@ -21,12 +43,10 @@ export const Pagination = ({ searchValue, currentPage, maxPage }) => {
               ? `${styles.disabled} ${styles.left}`
               : `${styles.left}`
           }
-          disabled={currentPage <= 1}
           src='./svg/arrow.svg'
           onClick={currentPage <= 1 ? null : Minus}
         />
         <img
-          disabled={currentPage >= maxPage}
           className={currentPage >= maxPage ? `${styles.disabled}` : null}
           src='./svg/arrow.svg'
           onClick={currentPage >= maxPage ? null : Plus}

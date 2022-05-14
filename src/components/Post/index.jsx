@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import { deletePost } from '../../redux/actions/articles';
+import Comment from '../Comment';
+import { createComment, updateComments } from '../../redux/actions/comments';
 
 import styles from './Post.module.scss';
 
@@ -11,26 +13,34 @@ function Post() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(true);
-  let { id } = useParams();
   const [post, setPost] = React.useState({});
+  const [commentValue, setCommentValue] = React.useState('');
+  let { id } = useParams();
   const userId = useSelector((state) => state.profile.id);
-  const location = useLocation();
-  console.log('post');
+  const { comments } = useSelector((state) => state);
+
+  // const location = useLocation();
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const { data } = await axios.get(`http://localhost:5656/posts/${id}`);
+      dispatch(updateComments(id));
       setPost(data);
       setIsLoading(false);
     };
     fetchData().catch(console.error);
-  }, [location]);
+  }, [id]);
 
   const handleClickDelete = () => {
     if (window.confirm('Вы действительно хотите удалить статью?')) {
       dispatch(deletePost(id));
       navigate('/');
     }
+  };
+
+  const onCreateComment = () => {
+    dispatch(createComment(commentValue, id));
+    setCommentValue('');
   };
 
   const options = {
@@ -85,7 +95,6 @@ function Post() {
         </>
       ) : (
         <>
-          {' '}
           <div className={styles.img}>
             {post.photoUrl && (
               <img src={`http://localhost:5656/${post.photoUrl}`} alt='img' />
@@ -103,11 +112,34 @@ function Post() {
           {userId === post.user._id ? (
             <ul className={styles.creatorPanel}>
               <li onClick={() => navigate(`/edit-post/${id}`)}>
-                [Редактировать]
+                Редактировать
               </li>
-              <li onClick={handleClickDelete}>[Удалить]</li>
+              <li onClick={handleClickDelete}>Удалить</li>
             </ul>
           ) : null}
+          <div className={styles.fullText}>
+            <p>{post.text}</p>
+          </div>
+          <div className={styles.comments}>
+            <h3>Комментарии ({comments.length})</h3>
+            {comments.map((item) => (
+              <Comment
+                key={item._id}
+                fullName={item.user.fullName}
+                createdAt={item.createdAt}
+                text={item.text}
+              />
+            ))}
+
+            <h3>Добавить комментарий</h3>
+            <textarea
+              value={commentValue}
+              onChange={(e) => setCommentValue(e.target.value)}
+            />
+            <button className={styles.btn} onClick={onCreateComment}>
+              Отправить
+            </button>
+          </div>
         </>
       )}
     </div>

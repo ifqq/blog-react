@@ -1,6 +1,7 @@
 .menu{
-  width: 100px ;
-  height: 100vh;
+  position: fixed;
+  width: 100px;
+  min-height: 100vh;
   right: 0;
   background-color: #13315E;
   color: #FFFFFF;
@@ -31,11 +32,12 @@
 }
 
 .menuOpen{
-  position: absolute;
+  position: fixed;
   overflow-x:hidden;
   width: 400px;
   height: 100%;
   right: 0;
+  bottom: 0;
   background-color: #13315E;
   color: #FFFFFF;
   .menuHeader{

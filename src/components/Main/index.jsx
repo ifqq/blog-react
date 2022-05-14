@@ -5,7 +5,7 @@ import styles from './Main.module.scss';
 function Main() {
   return (
     <div className={styles.wrapper}>
-      <h1>Vasya Pupkin</h1>
+      <h1>ChillOut</h1>
       <h2>Блог фронтенд-разработчика</h2>
       <img src='./img/imageBlog.png' alt='Img' />
       <h3>Обо мне</h3>

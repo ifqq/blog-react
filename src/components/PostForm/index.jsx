@@ -44,6 +44,15 @@ function PostForm({ edit }) {
         }
       };
       upd().catch(console.error);
+    } else {
+      setFields({
+        title: '',
+        description: '',
+        url: null,
+        text: '',
+        textUrl: '',
+        editFile: false,
+      });
     }
     setIsLoading(false);
   }, [location]);

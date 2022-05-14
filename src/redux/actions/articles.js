@@ -12,7 +12,6 @@ export const uploadArticle = (fields) => async (dispatch) => {
       await uploadPost(fields.title, fields.description, fields.text);
     }
     dispatch(updatePosts());
-    console.log('ok');
   } catch (error) {
     console.log(error);
   }
@@ -43,7 +42,7 @@ export const updatePosts =
         payload: {
           total: data.total,
           currentPage: page,
-          maxPage: data.total > 4 ? Math.trunc(data.total / 4) + 1 : 1,
+          maxPage: data.total > 4 ? Math.ceil(data.total / 4) : 1,
           items: data.items,
         },
       });
@@ -64,7 +63,7 @@ export const searchPosts =
         type: 'UPDATE_POSTS',
         payload: {
           total: data.total,
-          maxPage: data.total > 4 ? Math.trunc(data.total / 4) + 1 : 1,
+          maxPage: data.total > 4 ? Math.ceil(data.total / 4) : 1,
           items: data.items,
         },
       });

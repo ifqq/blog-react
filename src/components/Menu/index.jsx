@@ -65,8 +65,8 @@ function Menu({ onClickMenu, opened, setActive }) {
           </div>
         </div>
       ) : (
-        <div className={styles.menu}>
-          <div onClick={onClickMenu} className={styles.items}>
+        <div className={styles.menu} onClick={onClickMenu}>
+          <div className={styles.items}>
             <p>МЕНЮ</p>
             <img src='./svg/burger.svg' alt='' />
           </div>
