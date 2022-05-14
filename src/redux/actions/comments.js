@@ -17,7 +17,7 @@ export const updateComments = (id) => async (dispatch) => {
 
 export const createComment = (text, id) => async (dispatch) => {
   try {
-    await instance.post('${process.env.REACT_APP_API}comments', {
+    await instance.post(`${process.env.REACT_APP_API}comments`, {
       text: text,
       postId: id,
     });
