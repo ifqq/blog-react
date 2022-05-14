@@ -3,7 +3,7 @@ import { instance } from '../../config/axios';
 
 export const authMe = () => async (dispatch) => {
   try {
-    const { data } = await instance.get('/auth/me');
+    const { data } = await instance.get('auth/me');
     await dispatch(loginUser(data._id, data.fullName, data.createdAt));
   } catch {
     await dispatch(clearUserInfo());
