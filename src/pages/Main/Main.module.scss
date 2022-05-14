@@ -1,0 +1,34 @@
+.wrapper{
+  padding: 102px 64px 0 72px;
+  border: 1px solid;
+  border-color: #F9F9F9;
+  color: #202020;
+
+  h1{
+    margin: 0;
+    font-size: 72px;
+    font-weight: 800;
+    margin-bottom: 15px;
+  }
+  h2{
+    margin: 0;
+    font-size: 34px;
+    font-weight: 500;
+    color:#AAAAAA;
+    margin-bottom: 23px;
+  }
+  h3{
+    margin-top: 24px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  p{
+    margin: 0;
+    max-width: 584px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #000000;
+  }
+}

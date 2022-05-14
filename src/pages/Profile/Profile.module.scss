@@ -1,0 +1,40 @@
+.wrapper{
+  margin: 0 auto;
+  width: 560px;
+  line-height: 52px;
+  .header{
+    
+    h2{
+      color: #0058D9;
+      font-weight: 800;
+      font-size: 58px;
+      
+      margin-bottom: 12px;
+    }
+  
+    p{
+      font-weight: 500;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+    border-bottom: 1px solid #F2F2F2;
+  }
+  
+  .btn{
+    margin-top: 30px;
+    button{
+      font-weight: 500;
+      font-size: 14px;
+      text-align: center;
+      background: none;
+      border: none;
+      padding: 9px 15px;
+      cursor: pointer;
+    }
+    .btnSelected{
+      background-color: rgba(#40D269, 0.08);
+      border-radius: 4px;
+      color: #36B55A;
+    }
+}
+}

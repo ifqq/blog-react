@@ -1,0 +1,141 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.img{
+  width: 720px;
+  height: 452px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img{
+    min-width: 720px;
+  min-height: 452px;
+  }
+
+}
+.img:after {
+  content: '';
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  top: 0; left: 0;
+  background: rgba(0,0,0,0.4);
+}
+
+.header{
+  max-width: 590px;
+  left: 72px;
+  top: 120px;
+  color: #C1C1C1;
+  position: absolute;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  h2{
+    margin-top: 9px;
+    margin-bottom: 0;
+    font-size: 42px;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+  p{
+    margin-top: 14px;
+  }
+  span{
+    font-size: 14px;
+    text-transform: uppercase;
+    img{
+      margin-left: 21px;
+      margin-right: 5px;
+    }
+  }
+}
+
+.creatorPanel{
+  display: flex;
+  padding: 0;
+  margin: 0 auto;
+  margin-top: 15px;
+  
+  li {
+    padding: 5px 10px;
+    border-radius: 25px;
+    background-color: rgb(214, 214, 214);
+    list-style-type: none;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+}
+
+.fullText{
+  padding: 35px 70px;
+  margin: 0 ;
+}
+
+.comments{
+  padding: 0 70px;
+  h3{
+    color: #0A3465;
+    font-weight: 600;
+    font-size: 24px;
+  }
+  h3{
+    color:#0A3465;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  textarea{
+    width: 582px;
+    height: 90px;
+    margin: 0;
+    padding: 10px;
+    resize: none;
+    outline: none;
+    border: 1px solid #ECEEF1;
+    border-radius: 10px;
+    color: #080B0E;
+    font-size: 16px;
+    font-weight: 400;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  textarea::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .btn{
+    width: 160px;
+    height: 49px;
+    border: none;
+    background-color: #FFDF36;
+    border-radius: 12px;
+    margin: 26px 100%;
+    transform: translateX(-100%);
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 16px;
+    color:#68572D;
+  }
+  .btn:hover{
+    cursor: pointer;
+  }
+  .signSpan{
+    margin-left: 10px;
+    margin-top: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: rgb(251, 28, 28)
+  }
+  .error{
+    border: 1px solid rgb(250, 137, 137);
+  }
+}
+
